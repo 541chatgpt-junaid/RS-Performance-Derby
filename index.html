@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RS Performance Derby</title>
+<meta name="description" content="ECU remapping, diagnostics, DPF and AdBlue solutions in Derby. Stage 1 & 2 remaps, economy remaps, fault code removal. WhatsApp 07766679582.">
+<meta property="og:title" content="RS Performance Derby | Remapping, Diagnostics, DPF & AdBlue">
+<meta property="og:description" content="Stage 1 & 2 remaps, economy remaps, diagnostics, DPF and AdBlue solutions in Derby. WhatsApp 07766 679582.">
+<meta property="og:image" content="images/hero-cars.webp">
+<link rel="icon" type="image/png" href="images/logo.png">
+<link rel="preload" as="image" href="images/hero-cars.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;0,800;1,800;1,900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* VOICE: workshop-confident, fast, no fluff — book on WhatsApp in one tap
+   IDEA: the dashboard + dyno sheet — the page behaves like an instrument cluster
+   PICTURE: a big live rev counter in the hero that revs on load
+   COLOUR and TYPE: brand black + electric blue from their banner, yellow UK plate; Barlow Condensed italic + Barlow
+   LAYOUT: hero gauge, services grid, dyno sheet, estimator, DPF slider, process, visit, FAQ */
+:root{color-scheme:dark;--bg:#05070b;--panel:#0b1018;--panel2:#0f1621;--line:#1a2532;--ink:#eaf2fb;--mute:#93a4b8;--blue:#1aa3ff;--glow:#63d6ff;--plate:#ffd21f;--red:#ff4545}
+*{box-sizing:border-box;min-width:0}
+html{scroll-behavior:smooth;scroll-padding-top:76px}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Barlow,system-ui,sans-serif;overflow-x:clip}
+a{color:inherit}
+h1,h2,h3{font-family:"Barlow Condensed",Impact,sans-serif;font-style:italic;font-weight:900;line-height:1.02;margin:0;text-wrap:balance;text-transform:uppercase;letter-spacing:.01em}
+h2{font-size:clamp(32px,4.6vw,52px)}h3{font-size:24px;font-weight:800}
+p{margin:0}.mute{color:var(--mute)}
+.band{padding:clamp(48px,7vw,96px) max(5vw,16px)}.wrap{max-width:1240px;margin:0 auto}
+.btn{display:inline-flex;align-items:center;gap:10px;min-height:48px;padding:0 22px;border-radius:6px;font:800 18px/1 "Barlow Condensed",sans-serif;text-transform:uppercase;letter-spacing:.03em;text-decoration:none;border:1px solid var(--blue);transition:transform .2s,box-shadow .2s,background .2s;cursor:pointer}
+.btn.pri{background:var(--blue);color:#021018;border-color:var(--blue)}
+.btn.pri:hover{box-shadow:0 0 0 4px rgba(26,163,255,.25),0 10px 30px rgba(26,163,255,.35);transform:translateY(-2px)}
+.btn.sec{background:transparent;color:var(--ink)}.btn.sec:hover{background:rgba(26,163,255,.12)}
+.btn:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid var(--glow);outline-offset:3px}
+.btn svg{width:20px;height:20px}
+/* nav */
+nav{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:24px;padding:12px max(5vw,16px);background:rgba(5,7,11,.82);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.logo{display:flex;text-decoration:none}.logo img{height:44px;width:auto;display:block}
+nav .links{display:flex;gap:22px;margin-left:auto}
+nav .links a{text-decoration:none;color:var(--mute);font-weight:600}nav .links a:hover{color:#fff}
+nav .btn{min-height:44px;padding:0 16px;font-size:16px}
+/* hero */
+.hero{position:relative;overflow:hidden;background:linear-gradient(90deg,rgba(5,7,11,.97) 0%,rgba(5,7,11,.82) 45%,rgba(5,7,11,.55) 100%),linear-gradient(0deg,#05070b 0%,transparent 30%),radial-gradient(80% 70% at 75% 45%,rgba(26,163,255,.2),transparent 60%),url(images/hero-cars.webp) center/cover no-repeat,#05070b}
+@media(max-width:900px){.hero{background:linear-gradient(180deg,rgba(5,7,11,.78),rgba(5,7,11,.95) 70%),url(images/hero-cars.webp) center top/cover no-repeat,#05070b}}
+/* vans band */
+.vans{position:relative;min-height:440px;display:flex;align-items:center;background:linear-gradient(90deg,rgba(5,7,11,.95) 0%,rgba(5,7,11,.75) 45%,rgba(5,7,11,.1) 100%),url(images/vans.webp) center/cover no-repeat}
+.vans .box{max-width:520px}.vans p{color:#c9d6e4;margin:14px 0 24px}
+@media(max-width:700px){.vans{background:linear-gradient(180deg,rgba(5,7,11,.35),rgba(5,7,11,.96) 55%),url(images/vans.webp) 40% top/auto 260px no-repeat,#05070b;align-items:end;padding-top:240px}}
+/* gallery */
+.gal{display:grid;grid-template-columns:1.4fr 1fr 1fr;grid-template-rows:260px 260px;gap:14px;margin-top:36px}
+.gal figure{position:relative;margin:0;overflow:hidden;border-radius:12px;border:1px solid var(--line);background:var(--panel)}
+.gal figure:first-child{grid-row:span 2}.gal figure:nth-child(2){grid-row:span 2}
+.gal img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .8s cubic-bezier(.2,.7,.2,1),filter .5s;filter:saturate(.9)}
+.gal figure:hover img{transform:scale(1.06);filter:saturate(1.1)}
+.gal figcaption{position:absolute;left:0;right:0;bottom:0;padding:40px 16px 14px;background:linear-gradient(transparent,rgba(0,0,0,.85));font-weight:600;font-size:15px}
+.gal figcaption b{display:block;font:italic 800 20px/1.1 "Barlow Condensed";text-transform:uppercase;color:var(--glow)}
+@media(max-width:900px){.gal{grid-template-columns:1fr 1fr;grid-template-rows:none}.gal figure,.gal figure:first-child,.gal figure:nth-child(2){grid-row:auto;aspect-ratio:4/3}}
+@media(max-width:600px){.gal{grid-template-columns:1fr}}
+.foot-logo{height:64px;width:auto;display:block;margin-bottom:10px}
+.hero::before{content:"";position:absolute;inset:0;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:56px 56px;mask-image:radial-gradient(70% 70% at 60% 50%,#000 30%,transparent 80%);opacity:.5}
+.streak{position:absolute;width:3px;height:140%;top:-20%;background:linear-gradient(transparent,var(--blue),transparent);transform:rotate(18deg);opacity:.5;animation:streak 6s linear infinite}
+.streak:nth-child(2){left:38%;animation-delay:-2s;opacity:.25}.streak:nth-child(1){left:8%}.streak:nth-child(3){left:92%;animation-delay:-4s;opacity:.3}
+@keyframes streak{from{translate:0 -30%}to{translate:0 30%}}
+.hero .wrap{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:clamp(24px,4vw,56px);align-items:center;min-height:min(78vh,720px)}
+.hero h1{font-size:clamp(44px,7vw,92px)}
+.hero p.lead{font-size:clamp(17px,1.6vw,20px);color:#c9d6e4;max-width:34em;margin:20px 0 28px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:26px}
+.chips span{border:1px solid var(--line);background:var(--panel);padding:6px 12px;border-radius:99px;font-size:14px;color:var(--mute)}
+.cta{display:flex;flex-wrap:wrap;gap:12px}
+.gaugebox{position:relative;aspect-ratio:1;max-width:560px;width:100%;justify-self:center}
+.gaugebox svg{width:100%;height:100%;overflow:visible}
+.readout{position:absolute;left:50%;top:64%;translate:-50% 0;text-align:center}
+.readout b{display:block;font:italic 900 clamp(34px,5vw,56px)/1 "Barlow Condensed";font-variant-numeric:tabular-nums}
+.readout small{font:600 14px/1.2 Barlow;color:var(--mute)}
+.rev{position:absolute;left:50%;bottom:4%;translate:-50% 0;min-height:44px}
+/* services */
+.svc-head{display:flex;justify-content:space-between;align-items:end;gap:24px;flex-wrap:wrap;margin-bottom:36px}
+.svc-head p{max-width:36em}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:16px}
+.card{position:relative;background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--line);border-radius:10px;padding:26px 22px;transition:transform .3s,border-color .3s,box-shadow .3s;overflow:hidden}
+.card::after{content:"";position:absolute;inset:auto -40% -60% -40%;height:70%;background:radial-gradient(closest-side,rgba(26,163,255,.35),transparent);opacity:0;transition:opacity .35s}
+.card:hover{transform:translateY(-6px);border-color:var(--blue);box-shadow:0 18px 40px rgba(0,0,0,.5),0 0 0 1px rgba(26,163,255,.3)}
+.card:hover::after{opacity:1}
+.card svg{width:44px;height:44px;color:var(--blue);margin-bottom:16px;filter:drop-shadow(0 0 8px rgba(26,163,255,.6))}
+.card p{color:var(--mute);margin-top:8px;font-size:15px}
+/* dyno */
+.dyno{background:linear-gradient(180deg,#070c14,var(--bg))}
+.dyno .wrap{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:clamp(24px,4vw,56px);align-items:center}
+.sheet{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px}
+.sheet .top{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:14px;color:var(--mute);margin-bottom:8px}
+.key{display:flex;gap:16px}.key i{display:inline-block;width:18px;height:3px;vertical-align:middle;margin-right:6px;border-radius:2px}
+.fig{position:relative;min-height:340px}.fig>svg{position:absolute;inset:0;width:100%;height:100%}
+.fig path.c{stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 2.2s cubic-bezier(.3,.6,.2,1)}
+.fig path.s1{transition-delay:.5s}.fig path.a{opacity:0;transition:opacity 1s 1.6s}
+.fig.in path.c{stroke-dashoffset:0}.fig.in path.a{opacity:1}
+.stats{display:grid;gap:14px;margin-top:28px}
+.stat{display:flex;align-items:baseline;gap:14px;border-bottom:1px solid var(--line);padding-bottom:12px}
+.stat b{font:italic 900 clamp(40px,5vw,60px)/1 "Barlow Condensed";color:var(--blue);min-width:3.2em;font-variant-numeric:tabular-nums}
+.note{font-size:13px;color:var(--mute);margin-top:12px}
+/* estimator */
+.est .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:clamp(24px,4vw,56px);align-items:start}
+form{display:grid;gap:16px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:24px}
+label{display:grid;gap:6px;font-weight:600;font-size:15px}
+input,select{font:500 16px Barlow;min-height:48px;padding:0 14px;background:#060a10;border:1px solid var(--line);color:var(--ink);border-radius:6px;width:100%}
+.plate{display:flex;border-radius:6px;overflow:hidden;border:2px solid #111;background:var(--plate);box-shadow:0 6px 20px rgba(255,210,31,.18)}
+.plate span{background:#003399;color:#fff;font:700 12px/1 Barlow;display:grid;place-items:center;padding:0 10px;text-align:center}
+.plate input{background:transparent;border:0;border-radius:0;color:#111;font:800 clamp(26px,3.4vw,34px)/1 "Barlow Condensed";letter-spacing:.08em;text-transform:uppercase;text-align:center;min-height:64px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.result{background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--line);border-radius:12px;padding:24px}
+.result h3{margin-bottom:4px}
+.bars{display:grid;gap:18px;margin:22px 0}
+.bar .lab{display:flex;justify-content:space-between;font-size:15px;margin-bottom:6px}
+.bar .lab b{font-variant-numeric:tabular-nums;white-space:nowrap}
+.track{height:14px;background:#060a10;border-radius:99px;overflow:hidden;border:1px solid var(--line)}
+.fill{height:100%;border-radius:99px;background:#4a5a6c;transition:width .9s cubic-bezier(.3,.7,.2,1)}
+.fill.s1{background:linear-gradient(90deg,#0a6fb3,var(--blue))}.fill.s2{background:linear-gradient(90deg,var(--blue),var(--glow));box-shadow:0 0 14px rgba(99,214,255,.6)}
+.gain{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px}
+.gain div{background:#060a10;border:1px solid var(--line);border-radius:8px;padding:12px 14px}
+.gain b{display:block;font:italic 900 34px/1 "Barlow Condensed";color:var(--glow);font-variant-numeric:tabular-nums}
+.gain small{color:var(--mute);font-size:13px}
+/* before/after */
+.ba-wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:clamp(24px,4vw,56px);align-items:center}
+.ba{position:relative;aspect-ratio:9/5;border-radius:14px;overflow:hidden;border:1px solid var(--line);background:#0a0e14;--p:50%;user-select:none}
+.ba .layer{position:absolute;inset:0}.ba svg{width:100%;height:100%;display:block}
+.ba .dirty{clip-path:inset(0 calc(100% - var(--p)) 0 0)}
+.ba .tag{position:absolute;top:12px;padding:4px 10px;border-radius:4px;font:800 14px/1.2 "Barlow Condensed";text-transform:uppercase;letter-spacing:.06em;background:rgba(0,0,0,.65)}
+.ba .tag.l{left:12px;color:#ffb48a}.ba .tag.r{right:12px;color:var(--glow)}
+.handle{position:absolute;top:0;bottom:0;left:var(--p);width:3px;background:#fff;translate:-50% 0;box-shadow:0 0 18px var(--glow);pointer-events:none}
+.handle::after{content:"◀ ▶";position:absolute;top:50%;left:50%;translate:-50% -50%;background:#fff;color:#05070b;font-size:11px;padding:10px 8px;border-radius:99px;white-space:nowrap}
+.ba input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:ew-resize;margin:0}
+.ba:has(input:focus-visible){outline:3px solid var(--glow);outline-offset:3px}
+ul.ticks{list-style:none;padding:0;margin:20px 0 0;display:grid;gap:10px}
+ul.ticks li{padding-left:30px;position:relative}
+ul.ticks li::before{content:"";position:absolute;left:0;top:4px;width:18px;height:10px;border-left:3px solid var(--blue);border-bottom:3px solid var(--blue);transform:rotate(-45deg)}
+/* process */
+.steps{position:relative;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px;margin-top:40px}
+.steps::before,.steps::after{content:"";position:absolute;top:27px;left:28px;right:28px;height:3px;background:var(--line)}
+.steps::after{background:linear-gradient(90deg,var(--blue),var(--glow));transform-origin:left;transform:scaleX(0);transition:transform 1.8s ease;box-shadow:0 0 12px var(--blue)}
+.steps.in::after{transform:scaleX(1)}
+.step{position:relative;z-index:1}
+.step .n{width:56px;height:56px;border-radius:50%;display:grid;place-items:center;background:var(--panel);border:2px solid var(--blue);font:italic 900 26px "Barlow Condensed";color:var(--blue);margin-bottom:16px;box-shadow:0 0 0 6px var(--bg)}
+.step p{color:var(--mute);font-size:15px;margin-top:6px}
+/* marquee */
+.marq{border-block:1px solid var(--line);overflow:hidden;padding:18px 0;background:var(--panel)}
+.marq div{display:flex;gap:56px;width:max-content;animation:marq 32s linear infinite}
+.marq span{font:italic 800 26px "Barlow Condensed";text-transform:uppercase;color:#4d5d70;white-space:nowrap}
+@keyframes marq{to{transform:translateX(-50%)}}
+/* visit + faq */
+.visit .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(24px,4vw,56px)}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:26px}
+.panel dl{display:grid;grid-template-columns:auto 1fr;gap:12px 20px;margin:20px 0 24px}
+.panel dt{color:var(--mute)}.panel dd{margin:0;font-weight:600}
+details{border-bottom:1px solid var(--line)}
+summary{cursor:pointer;list-style:none;padding:18px 36px 18px 0;font-weight:600;font-size:17px;position:relative}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";position:absolute;right:4px;top:12px;font:900 28px "Barlow Condensed";color:var(--blue);transition:transform .3s}
+details[open] summary::after{transform:rotate(45deg)}
+details p{color:var(--mute);padding:0 0 18px}
+footer{padding:28px max(5vw,16px) 100px;border-top:1px solid var(--line);color:var(--mute);font-size:14px}
+footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.dock{display:none}
+/* reveal */
+.js .rv{opacity:0;transform:translateY(28px);transition:opacity .8s ease,transform .8s cubic-bezier(.2,.7,.2,1)}
+.js .rv.in{opacity:1;transform:none}
+@media(max-width:900px){nav .links{display:none}nav .btn{margin-left:auto}
+ .hero .wrap,.dyno .wrap,.est .wrap,.ba-wrap,.visit .wrap{grid-template-columns:minmax(0,1fr)}
+ .hero .wrap{min-height:0;padding-top:12px}.gaugebox{max-width:420px}
+ .steps{grid-template-columns:1fr 1fr}.steps::before,.steps::after{display:none}}
+@media(max-width:600px){.row2,.gain{grid-template-columns:1fr}.steps{grid-template-columns:1fr}
+ .dock{display:grid;grid-template-columns:1fr 1fr;gap:8px;position:fixed;left:0;right:0;bottom:0;z-index:30;padding:10px 12px;background:rgba(5,7,11,.94);border-top:1px solid var(--line)}
+ .dock .btn{justify-content:center;padding:0 10px}nav .btn span{display:none}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}html{scroll-behavior:auto}.js .rv{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<nav>
+ <a class="logo" href="#top"><img src="images/logo.png" alt="RS Performance Derby" width="138" height="44"></a>
+ <div class="links"><a href="#services">Services</a><a href="#gains">Gains</a><a href="#estimate">Estimate</a><a href="#dpf">DPF</a><a href="#visit">Visit</a></div>
+ <a class="btn pri wa" href="#"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.5 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.5-3.9-4.7-4.1-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.3 0 .5l-.3.5-.4.4c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1c.2-.3.4-.2.6-.1l2 .9c.3.2.5.2.5.3.1.1.1.7-.1 1.3Z"/></svg><span>WhatsApp to book</span></a>
+</nav>
+
+<header class="hero band" id="top">
+ <i class="streak"></i><i class="streak"></i><i class="streak"></i>
+ <div class="wrap">
+  <div class="rv">
+   <h1>Unlock your car’s potential</h1>
+   <p class="lead">Professional ECU remapping, diagnostics, DPF and AdBlue solutions in Derby. Quality workmanship, expert diagnostics and better performance.</p>
+   <div class="cta">
+    <a class="btn pri wa" href="#"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Z"/></svg>WhatsApp 07766 679582</a>
+    <a class="btn sec" href="#estimate">Estimate my gains</a>
+   </div>
+   <div class="chips"><span>Stage 1 &amp; 2 remaps</span><span>Economy remaps</span><span>Fault code removal</span><span>DPF &amp; AdBlue</span></div>
+  </div>
+  <div class="gaugebox rv" aria-label="Animated rev counter">
+   <svg id="gauge" viewBox="0 0 400 400" role="img" aria-hidden="true"></svg>
+   <div class="readout"><b id="rpm">0</b><small>RPM × Stage 1 ready</small></div>
+   <button class="btn sec rev" id="revBtn" type="button">Rev it</button>
+  </div>
+ </div>
+</header>
+
+<section class="band" id="services">
+ <div class="wrap">
+  <div class="svc-head rv"><h2>What we do</h2><p class="mute">Every job starts with a full diagnostic, so we fix the cause rather than just clearing the light.</p></div>
+  <div class="grid" id="svcGrid"></div>
+ </div>
+</section>
+
+<div class="marq" aria-label="Makes we work on"><div id="marq"></div></div>
+
+<section class="band dyno" id="gains">
+ <div class="wrap">
+  <div class="sheet rv">
+   <div class="top"><span>Dyno sheet · example 2.0 diesel</span><span class="key"><span><i style="background:#5b6b7e"></i>Stock</span><span><i style="background:var(--blue)"></i>Stage 1</span></span></div>
+   <div class="fig" id="dyno"><svg></svg></div>
+  </div>
+  <div class="rv">
+   <h2>More power where you actually use it</h2>
+   <p class="mute" style="margin-top:14px">A remap rewrites your engine’s fuel, boost and timing maps to release the headroom manufacturers leave in. The result is stronger mid-range pull, smoother overtaking and, with an economy remap, better mpg.</p>
+   <div class="stats">
+    <div class="stat"><b data-to="28" data-pre="+" data-suf="%">0</b><span>more power in this example</span></div>
+    <div class="stat"><b data-to="35" data-pre="+" data-suf="%">0</b><span>more torque, typical for turbo diesels</span></div>
+    <div class="stat"><b data-to="10" data-pre="up to " data-suf="%">0</b><span>better mpg with an economy remap</span></div>
+   </div>
+   <p class="note">Example figures only. Gains vary by vehicle and condition; we confirm yours after a diagnostic.</p>
+  </div>
+ </div>
+</section>
+
+<section class="band vans" aria-label="Vans and fleets">
+ <div class="wrap" style="width:100%"><div class="box rv">
+  <h2>Vans &amp; fleets welcome</h2>
+  <p>Economy remaps for Transits, Customs, Connects and other work vans. Smoother pulling when loaded and better mpg on every run.</p>
+  <a class="btn pri wa" href="#">Ask about fleet remaps</a>
+ </div></div>
+</section>
+
+<section class="band est" id="estimate">
+ <div class="wrap">
+  <div class="rv">
+   <h2>Estimate your gains</h2>
+   <p class="mute" style="margin:14px 0 22px">Enter your reg and current figures to see a typical Stage 1 and Stage 2 result, then send it to us on WhatsApp for an exact quote.</p>
+   <form id="estForm">
+    <div class="plate"><span>UK</span><input id="reg" value="AB12 CDE" maxlength="8" aria-label="Registration number" autocomplete="off"></div>
+    <label>Engine type<select id="fuel"><option value="d">Turbo diesel</option><option value="t">Turbo petrol</option><option value="n">Non-turbo petrol</option></select></label>
+    <div class="row2">
+     <label>Current power (bhp)<input id="bhp" type="number" inputmode="numeric" min="40" max="800" value="150"></label>
+     <label>Current torque (Nm)<input id="nm" type="number" inputmode="numeric" min="60" max="1200" value="340"></label>
+    </div>
+   </form>
+  </div>
+  <div class="result rv" aria-live="polite">
+   <h3 id="resTitle">Stage 1 estimate</h3>
+   <p class="mute" id="resSub">Based on your figures</p>
+   <div class="bars" id="bars"></div>
+   <div class="gain"><div><b id="gBhp">+0</b><small>bhp at Stage 1</small></div><div><b id="gNm">+0</b><small>Nm at Stage 1</small></div></div>
+   <a class="btn pri" id="sendWa" href="#">Send to WhatsApp for exact quote</a>
+   <p class="note">Estimate only. Live DVLA reg lookup can be connected at launch.</p>
+  </div>
+ </div>
+</section>
+
+<section class="band" id="dpf" style="background:linear-gradient(180deg,var(--bg),#070c14)">
+ <div class="wrap ba-wrap">
+  <div class="rv">
+   <h2>DPF &amp; AdBlue warning lights, sorted</h2>
+   <p class="mute" style="margin-top:14px">Drag the slider to see what a blocked diesel particulate filter looks like inside, and what we aim for after cleaning.</p>
+   <ul class="ticks"><li>DPF cleaning and forced regeneration</li><li>AdBlue fault finding: sensors, pumps, heaters and injectors</li><li>Fault code reading and removal</li><li>Back to smooth running and MOT-ready</li></ul>
+  </div>
+  <div class="ba rv" id="ba">
+   <div class="layer" id="clean"></div><div class="layer dirty" id="dirty"></div>
+   <span class="tag l">Blocked</span><span class="tag r">Cleaned</span>
+   <div class="handle"></div>
+   <input type="range" min="0" max="100" value="50" aria-label="Compare blocked and cleaned DPF">
+  </div>
+ </div>
+</section>
+
+<section class="band" id="process">
+ <div class="wrap">
+  <h2 class="rv">How it works</h2>
+  <div class="steps" id="steps">
+   <div class="step"><div class="n">1</div><h3>Diagnose</h3><p>Full health check and fault scan before anything is changed.</p></div>
+   <div class="step"><div class="n">2</div><h3>Read the ECU</h3><p>We back up your original software so it can always be restored.</p></div>
+   <div class="step"><div class="n">3</div><h3>Tune</h3><p>Stage 1, Stage 2 or economy map written to suit your car and driving.</p></div>
+   <div class="step"><div class="n">4</div><h3>Road test</h3><p>We check live data on the road and hand back the keys.</p></div>
+  </div>
+ </div>
+</section>
+
+<section class="band" id="work" style="padding-top:0">
+ <div class="wrap">
+  <h2 class="rv">From the workshop</h2>
+  <div class="gal">
+   <figure class="rv"><img src="images/workshop-remap.webp" alt="Performance SUV on ECU remap with bonnet open and tuning tools connected" loading="lazy" width="640" height="401"><figcaption><b>Remap in progress</b>Bench and OBD tuning with dealer-level tools</figcaption></figure>
+   <figure class="rv"><img src="images/audi-a5-stage1.webp" alt="Laptop reading the ECU of an Audi A5 3.0 TDI" loading="lazy" width="720" height="1082"><figcaption><b>Audi A5 3.0 TDI</b>Stage 1 remap</figcaption></figure>
+   <figure class="rv"><img src="images/engine-bay.webp" alt="Performance engine bay" loading="lazy" width="1400" height="875"><figcaption><b>Performance cars</b>Stage 1 &amp; 2 tuning</figcaption></figure>
+   <figure class="rv"><img src="images/hero-cars.webp" alt="Three performance saloons on track" loading="lazy" width="1200" height="627"><figcaption><b>All major makes</b>Audi, BMW, Mercedes and more</figcaption></figure>
+  </div>
+ </div>
+</section>
+
+<section class="band visit" id="visit">
+ <div class="wrap">
+  <div class="panel rv">
+   <h2>Visit or book</h2>
+   <dl><dt>Address</dt><dd>14 Cotton Brook Road, Derby, DE23 8YJ</dd><dt>WhatsApp</dt><dd>07766 679582</dd><dt>Services</dt><dd>Remapping · Diagnostics · DPF · AdBlue · Body kits</dd></dl>
+   <div class="cta"><a class="btn pri wa" href="#">WhatsApp to book</a><a class="btn sec" href="https://www.google.com/maps/search/?api=1&query=14+Cotton+Brook+Road+Derby+DE23+8YJ">Get directions</a></div>
+  </div>
+  <div class="rv">
+   <h2>Questions</h2>
+   <div id="faq" style="margin-top:12px"></div>
+   <p class="note">Draft answers for review by RS Performance before launch.</p>
+  </div>
+ </div>
+</section>
+
+<footer><div class="wrap"><span><img class="foot-logo" src="images/logo-full.png" alt="RS Performance Derby: remaps, service, AdBlue solutions, diagnostics" loading="lazy" width="160" height="64">© RS Performance Derby · 14 Cotton Brook Road, Derby, DE23 8YJ</span><span>Quality workmanship, expert diagnostics &amp; better performance</span></div></footer>
+<div class="dock"><a class="btn pri wa" href="#">WhatsApp</a><a class="btn sec" href="tel:+447766679582">Call</a></div>
+
+<script>
+{
+document.documentElement.classList.add('js');
+const WA='447766679582',waLink=t=>'https://wa.me/'+WA+(t?'?text='+encodeURIComponent(t):'');
+document.querySelectorAll('a.wa').forEach(a=>a.href=waLink('Hi RS Performance Derby, I’d like to book.'));
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* services */
+const ic={
+chip:'<rect x="12" y="12" width="24" height="24" rx="3"/><path d="M18 30l5-5 3 3 6-7M30 21h2v2"/><path d="M18 6v6M24 6v6M30 6v6M18 36v6M24 36v6M30 36v6M6 18h6M6 24h6M6 30h6M36 18h6M36 24h6M36 30h6"/>',
+eco:'<path d="M8 32a16 16 0 1 1 32 0"/><path d="M24 32l-7-9"/><circle cx="24" cy="32" r="2.5"/><path d="M30 38c6 0 9-5 9-11-6 0-9 3-9 7v4zM30 38l5-6"/>',
+code:'<path d="M24 7L43 40H5z"/><path d="M24 19v10M24 34v1"/>',
+diag:'<rect x="8" y="10" width="32" height="22" rx="2"/><path d="M4 38h40M12 22h7l3-6 4 11 3-5h7"/>',
+dpf:'<rect x="8" y="14" width="32" height="20" rx="10"/><path d="M2 24h6M40 24h6"/><g fill="currentColor" stroke="none"><circle cx="17" cy="20" r="1.6"/><circle cx="24" cy="20" r="1.6"/><circle cx="31" cy="20" r="1.6"/><circle cx="17" cy="28" r="1.6"/><circle cx="24" cy="28" r="1.6"/><circle cx="31" cy="28" r="1.6"/></g>',
+drop:'<path d="M24 6c7 10 12 16 12 23a12 12 0 0 1-24 0c0-7 5-13 12-23z"/><path d="M18 30a6 6 0 0 0 6 6"/>',
+body:'<path d="M4 31v-6l6-2 6-7h15l7 7 6 2v6h-4"/><path d="M14 31h20"/><circle cx="10" cy="31" r="4"/><circle cx="38" cy="31" r="4"/>'};
+const svcs=[['chip','Stage 1 & 2 remapping','Stage 1 on a healthy standard car, Stage 2 for cars with supporting hardware.'],
+['eco','Economic remapping','A smoother, more efficient map focused on mpg for daily drivers, vans and fleets.'],
+['code','Fault code removal','We read, diagnose and clear fault codes, and fix what triggered them.'],
+['diag','Diagnostics & fault finding','Dealer-level scanning and live data to find the real cause of warning lights.'],
+['dpf','DPF services','Cleaning, forced regeneration and sensor checks for blocked particulate filters.'],
+['drop','AdBlue solutions','Fault finding and repair for AdBlue warnings, pumps, heaters and sensors.'],
+['body','Body kits','Styling upgrades supplied and fitted to finish off the look.']];
+document.getElementById('svcGrid').innerHTML=svcs.map(([i,t,d])=>`<article class="card rv"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">${ic[i]}</svg><h3>${t}</h3><p>${d}</p></article>`).join('');
+
+/* marquee */
+const makes=['Audi','BMW','Volkswagen','Mercedes-Benz','Ford','Vauxhall','Land Rover','Skoda','Seat','Toyota','Nissan','Peugeot','Volvo','Mini'];
+document.getElementById('marq').innerHTML=[...makes,...makes].map(m=>`<span>${m}</span>`).join('');
+
+/* gauge */
+const G=document.getElementById('gauge'),cx=200,cy=200,ang=v=>(135+v/8*270)*Math.PI/180;
+const pt=(r,v)=>[cx+Math.cos(ang(v))*r,cy+Math.sin(ang(v))*r];
+const arc=(r,a,b)=>{const[x1,y1]=pt(r,a),[x2,y2]=pt(r,b);return`M${x1} ${y1}A${r} ${r} 0 ${(b-a)/8*270>180?1:0} 1 ${x2} ${y2}`};
+let t='<defs><radialGradient id="gf"><stop offset="0" stop-color="#0f1a26"/><stop offset="1" stop-color="#05080d"/></radialGradient><filter id="gl"><feGaussianBlur stdDeviation="4"/></filter></defs>';
+t+=`<circle cx="200" cy="200" r="190" fill="url(#gf)" stroke="#1a2532" stroke-width="2"/><circle cx="200" cy="200" r="178" fill="none" stroke="#0e1620" stroke-width="6"/>`;
+t+=`<path d="${arc(160,0,8)}" fill="none" stroke="#16202c" stroke-width="14" stroke-linecap="round"/>`;
+t+=`<path d="${arc(160,6.5,8)}" fill="none" stroke="#ff4545" stroke-width="14" opacity=".85"/>`;
+t+=`<path id="act" d="${arc(160,0,.01)}" fill="none" stroke="#1aa3ff" stroke-width="14" stroke-linecap="round"/><path id="actg" d="${arc(160,0,.01)}" fill="none" stroke="#63d6ff" stroke-width="14" filter="url(#gl)" opacity=".7"/>`;
+for(let v=0;v<=8;v+=.5){const maj=v%1===0,[a,b]=pt(146,v),[c,d]=pt(maj?126:136,v);t+=`<line x1="${a}" y1="${b}" x2="${c}" y2="${d}" stroke="${v>=6.5?'#ff6b6b':'#c7d4e2'}" stroke-width="${maj?4:2}"/>`;
+ if(maj){const[x,y]=pt(106,v);t+=`<text x="${x}" y="${y+8}" text-anchor="middle" fill="${v>=6.5?'#ff6b6b':'#eaf2fb'}" font-family="Barlow Condensed" font-style="italic" font-weight="900" font-size="26">${v}</text>`}}
+t+=`<text x="200" y="128" text-anchor="middle" fill="#1aa3ff" font-family="Barlow Condensed" font-style="italic" font-weight="900" font-size="30">RS</text><text x="200" y="146" text-anchor="middle" fill="#93a4b8" font-family="Barlow" font-size="11" letter-spacing="2">X1000 RPM</text>`;
+t+=`<g id="needle" transform="rotate(135 200 200)"><path d="M190 196 L344 200 L190 204 Z" fill="#ff4545"/><circle cx="200" cy="200" r="16" fill="#0b1018" stroke="#2a3a4c" stroke-width="3"/><circle cx="200" cy="200" r="5" fill="#ff4545"/></g>`;
+G.innerHTML=t;
+const nd=document.getElementById('needle'),act=document.getElementById('act'),actg=document.getElementById('actg'),rpmEl=document.getElementById('rpm');
+let cur=0,raf;
+const set=v=>{cur=v;nd.setAttribute('transform',`rotate(${135+v/8*270} 200 200)`);const d=arc(160,0,Math.max(v,.01));act.setAttribute('d',d);actg.setAttribute('d',d);rpmEl.textContent=Math.round(v*1000/50)*50+''};
+const tween=(to,ms,ease)=>new Promise(r=>{const from=cur,s=performance.now();const f=n=>{const k=Math.min(1,(n-s)/ms);set(from+(to-from)*ease(k));k<1?raf=requestAnimationFrame(f):r()};raf=requestAnimationFrame(f)});
+const out=k=>1-Math.pow(1-k,3),io=k=>k<.5?4*k*k*k:1-Math.pow(-2*k+2,3)/2;
+const rev=async()=>{cancelAnimationFrame(raf);if(reduce){set(3.2);return}await tween(7.4,950,out);await tween(5.6,180,io);await tween(7.1,260,out);await tween(3.2,1300,io)};
+document.getElementById('revBtn').addEventListener('click',rev);
+setTimeout(rev,400);
+
+/* dyno */
+const rpms=[1000,1500,2000,2500,3000,3500,4000,4500,5000],stock=[40,70,105,130,145,150,148,138,120],s1=[48,90,140,172,188,192,186,170,146];
+const fig=document.getElementById('dyno'),ds=fig.querySelector('svg');
+const smooth=p=>p.map((q,i)=>{if(!i)return`M${q[0]} ${q[1]}`;const a=p[i-2]||p[i-1],b=p[i-1],d=p[i+1]||q;return`C${b[0]+(q[0]-a[0])/6} ${b[1]+(q[1]-a[1])/6} ${q[0]-(d[0]-b[0])/6} ${q[1]-(d[1]-b[1])/6} ${q[0]} ${q[1]}`}).join('');
+const drawDyno=()=>{const W=ds.clientWidth,H=ds.clientHeight;if(!W)return;const L=44,R=16,T=20,B=34,x=r=>L+(r-1000)/4000*(W-L-R),y=v=>T+(1-v/220)*(H-T-B);
+ const narrow=W<520;let g='<defs><linearGradient id="da" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1aa3ff" stop-opacity=".35"/><stop offset="1" stop-color="#1aa3ff" stop-opacity="0"/></linearGradient></defs>';
+ for(let v=0;v<=200;v+=50)g+=`<line x1="${L}" x2="${W-R}" y1="${y(v)}" y2="${y(v)}" stroke="#1a2532"/><text x="${L-8}" y="${y(v)+4}" text-anchor="end" fill="#93a4b8" font-size="12">${v}</text>`;
+ rpms.forEach((r,i)=>{if(narrow&&i%2)return;g+=`<text x="${x(r)}" y="${H-10}" text-anchor="middle" fill="#93a4b8" font-size="12">${narrow?r/1000+'k':r}</text>`});
+ g+=`<text x="${L}" y="12" fill="#93a4b8" font-size="12">bhp</text><text x="${W-R}" y="${H-10}" text-anchor="end" fill="#93a4b8" font-size="12" ${narrow?'opacity="0"':''}>rpm</text>`;
+ const ps=rpms.map((r,i)=>[x(r),y(stock[i])]),p1=rpms.map((r,i)=>[x(r),y(s1[i])]);
+ g+=`<path class="a" d="${smooth(p1)}L${x(5000)} ${y(0)}L${x(1000)} ${y(0)}Z" fill="url(#da)"/>`;
+ g+=`<path class="c" pathLength="1" d="${smooth(ps)}" fill="none" stroke="#5b6b7e" stroke-width="3"/><path class="c s1" pathLength="1" d="${smooth(p1)}" fill="none" stroke="#1aa3ff" stroke-width="4" style="filter:drop-shadow(0 0 6px #1aa3ff)"/>`;
+ g+=`<g class="a" style="opacity:0;transition:opacity .8s 2.4s"><circle cx="${x(3500)}" cy="${y(192)}" r="5" fill="#63d6ff"/><text x="${x(3500)}" y="${y(192)-14}" text-anchor="middle" fill="#eaf2fb" font-weight="700" font-size="14">192 bhp</text><text x="${x(3500)}" y="${y(150)+22}" text-anchor="middle" fill="#93a4b8" font-size="13">150 bhp stock</text></g>`;
+ ds.innerHTML=g;if(fig.classList.contains('in'))ds.querySelectorAll('g.a').forEach(e=>e.style.opacity=1)};
+const dynoRO=new ResizeObserver(drawDyno);dynoRO.observe(ds);
+
+/* reveal + counters + dyno trigger */
+const count=el=>{const to=+el.dataset.to,pre=el.dataset.pre||'',suf=el.dataset.suf||'',s=performance.now();if(reduce){el.textContent=pre+to+suf;return}const f=n=>{const k=Math.min(1,(n-s)/1400);el.textContent=pre+Math.round(to*out(k))+suf;if(k<1)requestAnimationFrame(f)};requestAnimationFrame(f)};
+const revealIO=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;const el=e.target;el.classList.add('in');
+ if(el===fig)ds.querySelectorAll('g.a').forEach(g=>g.style.opacity=1);
+ el.querySelectorAll('[data-to]').forEach(count);revealIO.unobserve(el)}),{threshold:.2});
+document.querySelectorAll('.rv,#dyno,#steps').forEach(el=>revealIO.observe(el));
+
+/* estimator */
+const pct={d:[.30,.35,.42,.48],t:[.20,.25,.32,.38],n:[.07,.08,0,0]};
+const $=id=>document.getElementById(id);
+const est=()=>{const f=$('fuel').value,b=Math.max(0,+$('bhp').value||0),n=Math.max(0,+$('nm').value||0),p=pct[f],reg=($('reg').value||'').toUpperCase().trim();
+ const b1=Math.round(b*(1+p[0])),n1=Math.round(n*(1+p[1])),b2=p[2]?Math.round(b*(1+p[2])):0,n2=p[3]?Math.round(n*(1+p[3])):0,mb=Math.max(b,b1,b2)||1,mn=Math.max(n,n1,n2)||1;
+ const row=(l,v,u,m,c)=>`<div class="bar"><div class="lab"><span>${l}</span><b>${v} ${u}</b></div><div class="track"><div class="fill ${c}" style="width:0" data-w="${v/m*100}"></div></div></div>`;
+ $('bars').innerHTML=row('Stock power',b,'bhp',mb,'')+row('Stage 1 power',b1,'bhp',mb,'s1')+(b2?row('Stage 2 power',b2,'bhp',mb,'s2'):'')+row('Stock torque',n,'Nm',mn,'')+row('Stage 1 torque',n1,'Nm',mn,'s1')+(n2?row('Stage 2 torque',n2,'Nm',mn,'s2'):'');
+ requestAnimationFrame(()=>requestAnimationFrame(()=>$('bars').querySelectorAll('.fill').forEach(e=>e.style.width=e.dataset.w+'%')));
+ $('gBhp').textContent='+'+(b1-b);$('gNm').textContent='+'+(n1-n);
+ $('resSub').textContent=(reg?reg+' · ':'')+$('fuel').selectedOptions[0].text+(p[2]?'':' · Stage 2 needs a turbo');
+ $('sendWa').href=waLink(`Hi RS Performance Derby, I'd like a remap quote.\nReg: ${reg||'-'}\nEngine: ${$('fuel').selectedOptions[0].text}\nCurrent: ${b} bhp / ${n} Nm\nEstimate Stage 1: ${b1} bhp / ${n1} Nm`)};
+['reg','fuel','bhp','nm'].forEach(i=>$(i).addEventListener('input',est));
+$('estForm').addEventListener('submit',e=>e.preventDefault());est();
+
+/* DPF before/after */
+let seed=7;const rnd=()=>(seed=(seed*16807)%2147483647)/2147483647;
+const dpf=dirty=>{let s=`<svg viewBox="0 0 360 200" preserveAspectRatio="xMidYMid slice"><defs><radialGradient id="cl${dirty}" cx=".5" cy=".5" r=".7"><stop offset="0" stop-color="${dirty?'#2b2622':'#16324a'}"/><stop offset="1" stop-color="${dirty?'#0b0a09':'#060b12'}"/></radialGradient></defs><rect width="360" height="200" fill="url(#cl${dirty})"/>`;
+ seed=7;for(let r=0;r<11;r++)for(let c=0;c<20;c++){const x=4+c*18,y=4+r*18,k=rnd();
+  if(dirty){const blk=k<.45;s+=`<rect x="${x}" y="${y}" width="14" height="14" rx="2" fill="${blk?'#0a0908':'#1d1a17'}" stroke="#3a332c" stroke-width="1"/>`;if(!blk)s+=`<circle cx="${x+4+rnd()*6}" cy="${y+4+rnd()*6}" r="${2+rnd()*3}" fill="#000" opacity=".8"/>`}
+  else{rnd();rnd();s+=`<rect x="${x}" y="${y}" width="14" height="14" rx="2" fill="#081521" stroke="#2c6f9c" stroke-width="1"/><rect x="${x+3}" y="${y+3}" width="8" height="8" rx="1" fill="#63d6ff" opacity="${.12+k*.25}"/>`}}
+ return s+'</svg>'};
+$('clean').innerHTML=dpf(0);$('dirty').innerHTML=dpf(1);
+const ba=$('ba'),rng=ba.querySelector('input');rng.addEventListener('input',()=>ba.style.setProperty('--p',rng.value+'%'));
+
+/* FAQ */
+const faq=[['Is remapping safe for my engine?','A good remap stays within the safe limits of your engine, gearbox and clutch. We diagnose first and won’t tune a car that has existing faults.'],
+['Can my car go back to standard?','Yes. We save your original software before any change, so it can be restored at any time.'],
+['Do I need to tell my insurer?','Yes, a remap is a modification and you should declare it to your insurer.'],
+['My DPF light is on. Can you help?','We find out why the filter is blocking, clean or regenerate it, check the sensors and clear the related codes.'],
+['I have an AdBlue warning. What now?','We read the fault codes and trace the cause, whether that is a sensor, pump, heater or injector, then repair it.'],
+['How long does it take?','Most jobs are done the same day. Message us on WhatsApp with your reg for a time and price.']];
+$('faq').innerHTML=faq.map(([q,a])=>`<details><summary>${q}</summary><p>${a}</p></details>`).join('');
+}
+</script>
+</body>
+</html>
