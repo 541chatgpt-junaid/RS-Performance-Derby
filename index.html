@@ -237,7 +237,7 @@ footer a{color:var(--glow);text-decoration:none;white-space:nowrap}
    <div class="stats">
     <div class="stat"><b data-to="28" data-pre="+" data-suf="%">0</b><span>more power in this example</span></div>
     <div class="stat"><b data-to="35" data-pre="+" data-suf="%">0</b><span>more torque, typical for turbo diesels</span></div>
-    <div class="stat"><b data-to="10" data-pre="up to " data-suf="%">0</b><span>better mpg with an economy remap</span></div>
+    <div class="stat"><b data-to="15" data-pre="up to " data-suf="%">0</b><span>better mpg with an economy remap</span></div>
    </div>
    <p class="note">Example figures only. Gains vary by vehicle and condition; we confirm yours after a diagnostic.</p>
   </div>
@@ -256,22 +256,21 @@ footer a{color:var(--glow);text-decoration:none;white-space:nowrap}
  <div class="wrap">
   <div class="rv">
    <h2>Estimate your gains</h2>
-   <p class="mute" style="margin:14px 0 22px">Enter your reg and current figures to see a typical Stage 1 and Stage 2 result, then send it to us on WhatsApp for an exact quote.</p>
+   <p class="mute" style="margin:14px 0 22px">Pick your make and model to see typical Stage 1 figures for your engine, then send it to us on WhatsApp for an exact quote.</p>
    <form id="estForm">
-    <div class="plate"><span>UK</span><input id="reg" value="AB12 CDE" maxlength="8" aria-label="Registration number" autocomplete="off"></div>
-    <label>Engine type<select id="fuel"><option value="d">Turbo diesel</option><option value="t">Turbo petrol</option><option value="n">Non-turbo petrol</option></select></label>
-    <div class="row2">
-     <label>Current power (bhp)<input id="bhp" type="number" inputmode="numeric" min="40" max="800" value="150"></label>
-     <label>Current torque (Nm)<input id="nm" type="number" inputmode="numeric" min="60" max="1200" value="340"></label>
-    </div>
+    <label>Make<select id="make"></select></label>
+    <label>Model &amp; engine<select id="model"></select></label>
+    <label>Your reg (optional)<div class="plate"><span>UK</span><input id="reg" placeholder="AB12 CDE" maxlength="8" aria-label="Registration number" autocomplete="off"></div></label>
    </form>
   </div>
   <div class="result rv" aria-live="polite">
    <h3 id="resTitle">Stage 1 estimate</h3>
-   <p class="mute" id="resSub">Based on your figures</p>
-   <div class="bars" id="bars"></div>
-   <div class="gain"><div><b id="gBhp">+0</b><small>bhp at Stage 1</small></div><div><b id="gNm">+0</b><small>Nm at Stage 1</small></div></div>
+   <p class="mute" id="resSub"></p>
+   <div id="resBody"><div class="bars" id="bars"></div>
+   <div class="gain"><div><b id="gBhp">+0</b><small>bhp at Stage 1</small></div><div><b id="gNm">+0</b><small>Nm at Stage 1</small></div></div></div>
+   <p class="mute" id="resEmpty" hidden style="margin:18px 0 22px">No problem. Send us your reg on WhatsApp and we’ll tell you exactly what your car can make.</p>
    <a class="btn pri" id="sendWa" href="#">Send to WhatsApp for exact quote</a>
+   <p class="note">Typical Stage 1 figures for a healthy, standard car. Your exact figures are confirmed after a diagnostic.</p>
   </div>
  </div>
 </section>
@@ -414,19 +413,78 @@ const revealIO=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)
  el.querySelectorAll('[data-to]').forEach(count);revealIO.unobserve(el)}),{threshold:.2});
 document.querySelectorAll('.rv,#dyno,#steps').forEach(el=>revealIO.observe(el));
 
-/* estimator */
-const pct={d:[.30,.35,.42,.48],t:[.20,.25,.32,.38],n:[.07,.08,0,0]};
+/* estimator: make|model & engine|stock bhp|stock Nm|Stage 1 bhp|Stage 1 Nm */
 const $=id=>document.getElementById(id);
-const est=()=>{const f=$('fuel').value,b=Math.max(0,+$('bhp').value||0),n=Math.max(0,+$('nm').value||0),p=pct[f],reg=($('reg').value||'').toUpperCase().trim();
- const b1=Math.round(b*(1+p[0])),n1=Math.round(n*(1+p[1])),b2=p[2]?Math.round(b*(1+p[2])):0,n2=p[3]?Math.round(n*(1+p[3])):0,mb=Math.max(b,b1,b2)||1,mn=Math.max(n,n1,n2)||1;
- const row=(l,v,u,m,c)=>`<div class="bar"><div class="lab"><span>${l}</span><b>${v} ${u}</b></div><div class="track"><div class="fill ${c}" style="width:0" data-w="${v/m*100}"></div></div></div>`;
- $('bars').innerHTML=row('Stock power',b,'bhp',mb,'')+row('Stage 1 power',b1,'bhp',mb,'s1')+(b2?row('Stage 2 power',b2,'bhp',mb,'s2'):'')+row('Stock torque',n,'Nm',mn,'')+row('Stage 1 torque',n1,'Nm',mn,'s1')+(n2?row('Stage 2 torque',n2,'Nm',mn,'s2'):'');
+const CARS=`Audi|A3 1.6 TDI 110|110|250|140|300
+Audi|A3 2.0 TDI 150|150|340|190|410
+Audi|S3 2.0 TFSI 300|300|380|360|470
+Audi|A4 2.0 TDI 150|150|320|190|400
+Audi|A4 2.0 TDI 190|190|400|230|460
+Audi|A5 3.0 TDI 218|218|500|270|580
+Audi|A6 3.0 TDI 272|272|580|320|650
+Audi|Q5 2.0 TDI 190|190|400|230|460
+Audi|Q7 3.0 TDI 272|272|600|320|680
+BMW|118d 150|150|320|190|400
+BMW|320d 190|190|400|230|470
+BMW|520d 190|190|400|230|470
+BMW|530d 265|265|620|320|700
+BMW|X5 30d 265|265|620|320|700
+BMW|M140i 340|340|500|400|580
+Citroen|Berlingo 1.5 BlueHDi 100|100|250|130|300
+Ford|Fiesta ST 1.6 EcoBoost 180|180|240|215|320
+Ford|Focus 1.0 EcoBoost 125|125|170|150|230
+Ford|Focus ST 2.0 EcoBoost 250|250|360|280|420
+Ford|Ranger 3.2 TDCi 200|200|470|230|540
+Ford|Transit 2.0 EcoBlue 130|130|385|170|440
+Ford|Transit Custom 2.0 EcoBlue 130|130|385|170|440
+Ford|Transit Custom 2.0 EcoBlue 170|170|405|200|460
+Land Rover|Discovery Sport 2.0 TD4 180|180|430|210|480
+Land Rover|Range Rover Evoque 2.0 TD4 180|180|430|210|480
+Land Rover|Discovery 5 3.0 TDV6 258|258|600|300|680
+Land Rover|Range Rover Sport 3.0 SDV6 306|306|700|340|760
+Mercedes-Benz|C220d 170|170|400|210|470
+Mercedes-Benz|C220d 194|194|400|230|470
+Mercedes-Benz|E220d 194|194|400|230|470
+Mercedes-Benz|Sprinter 316 CDI 163|163|360|195|420
+Mercedes-Benz|Vito 119 CDI 190|190|440|220|500
+Nissan|Navara 2.3 dCi 190|190|450|220|500
+Nissan|Qashqai 1.5 dCi 110|110|260|130|300
+Peugeot|308 1.5 BlueHDi 130|130|300|155|350
+Skoda|Octavia 2.0 TDI 150|150|340|190|410
+Skoda|Octavia vRS 2.0 TSI 245|245|370|300|450
+Skoda|Superb 2.0 TDI 190|190|400|230|460
+Toyota|Hilux 2.4 D-4D 150|150|400|180|450
+Vauxhall|Astra 1.6 CDTi 136|136|320|170|380
+Vauxhall|Insignia 2.0 CDTi 170|170|400|200|450
+Vauxhall|Vivaro 1.6 CDTi 120|120|320|150|370
+Volkswagen|Golf 1.6 TDI 110|110|250|140|300
+Volkswagen|Golf 2.0 TDI 150|150|340|190|410
+Volkswagen|Golf GTD 2.0 TDI 184|184|380|220|450
+Volkswagen|Golf GTI 2.0 TSI 230|230|350|290|420
+Volkswagen|Golf R 2.0 TSI 300|300|380|360|470
+Volkswagen|Passat 2.0 TDI 150|150|340|190|410
+Volkswagen|Transporter T6 2.0 TDI 102|102|250|140|330
+Volkswagen|Transporter T6 2.0 TDI 150|150|340|190|410
+Volkswagen|Crafter 2.0 TDI 140|140|340|175|400`.split('\n').map(l=>{const[mk,md,a,b,c,d]=l.split('|');return{mk,md,b0:+a,n0:+b,b1:+c,n1:+d}});
+const OTHER='__other';
+const carMakes=[...new Set(CARS.map(c=>c.mk))];
+$('make').innerHTML=carMakes.map(m=>`<option>${m}</option>`).join('')+`<option value="${OTHER}">Other make</option>`;
+const fillModels=()=>{const mk=$('make').value;$('model').innerHTML=CARS.filter(c=>c.mk===mk).map(c=>`<option value="${CARS.indexOf(c)}">${c.md}</option>`).join('')+`<option value="${OTHER}">My model isn’t listed</option>`};
+const est=()=>{const reg=($('reg').value||'').toUpperCase().trim(),v=$('model').value,other=v===OTHER||$('make').value===OTHER;
+ $('resBody').hidden=other;$('resEmpty').hidden=!other;
+ if(other){$('resTitle').textContent='We’ll check your car';$('resSub').textContent=reg||'';
+  $('sendWa').href=waLink(`Hi RS Performance Derby, I'd like a remap quote.\nReg: ${reg||'-'}\nMake: ${$('make').value===OTHER?'-':$('make').value}`);return}
+ const c=CARS[+v],mb=c.b1,mn=c.n1;
+ $('resTitle').textContent='Stage 1 estimate';$('resSub').textContent=(reg?reg+' · ':'')+c.mk+' '+c.md;
+ const row=(l,val,u,m,cl)=>`<div class="bar"><div class="lab"><span>${l}</span><b>${val} ${u}</b></div><div class="track"><div class="fill ${cl}" style="width:0" data-w="${val/m*100}"></div></div></div>`;
+ $('bars').innerHTML=row('Stock power',c.b0,'bhp',mb,'')+row('Stage 1 power',c.b1,'bhp',mb,'s1')+row('Stock torque',c.n0,'Nm',mn,'')+row('Stage 1 torque',c.n1,'Nm',mn,'s1');
  requestAnimationFrame(()=>requestAnimationFrame(()=>$('bars').querySelectorAll('.fill').forEach(e=>e.style.width=e.dataset.w+'%')));
- $('gBhp').textContent='+'+(b1-b);$('gNm').textContent='+'+(n1-n);
- $('resSub').textContent=(reg?reg+' · ':'')+$('fuel').selectedOptions[0].text+(p[2]?'':' · Stage 2 needs a turbo');
- $('sendWa').href=waLink(`Hi RS Performance Derby, I'd like a remap quote.\nReg: ${reg||'-'}\nEngine: ${$('fuel').selectedOptions[0].text}\nCurrent: ${b} bhp / ${n} Nm\nEstimate Stage 1: ${b1} bhp / ${n1} Nm`)};
-['reg','fuel','bhp','nm'].forEach(i=>$(i).addEventListener('input',est));
-$('estForm').addEventListener('submit',e=>e.preventDefault());est();
+ $('gBhp').textContent='+'+(c.b1-c.b0);$('gNm').textContent='+'+(c.n1-c.n0);
+ $('sendWa').href=waLink(`Hi RS Performance Derby, I'd like a remap quote.\nReg: ${reg||'-'}\nCar: ${c.mk} ${c.md}\nStock: ${c.b0} bhp / ${c.n0} Nm\nTypical Stage 1: ${c.b1} bhp / ${c.n1} Nm`)};
+$('make').addEventListener('change',()=>{fillModels();est()});
+['model','reg'].forEach(i=>$(i).addEventListener('input',est));
+$('estForm').addEventListener('submit',e=>e.preventDefault());
+$('make').value='Volkswagen';fillModels();$('model').value=String(CARS.findIndex(c=>c.md==='Golf 2.0 TDI 150'));est();
 
 /* DPF before/after */
 let seed=7;const rnd=()=>(seed=(seed*16807)%2147483647)/2147483647;
