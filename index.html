@@ -159,6 +159,11 @@ details p{color:var(--mute);padding:0 0 18px}
 footer{padding:28px max(5vw,16px) 100px;border-top:1px solid var(--line);color:var(--mute);font-size:14px}
 footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 .dock{display:none}
+footer a{color:var(--glow);text-decoration:none;white-space:nowrap}
+.wa-float{position:fixed;right:20px;bottom:20px;z-index:40;width:60px;height:60px;border-radius:50%;display:grid;place-items:center;background:#25D366;color:#fff;box-shadow:0 8px 24px rgba(0,0,0,.45);animation:waPulse 2.2s ease-out infinite;transition:transform .2s}
+.wa-float svg{width:32px;height:32px}.wa-float:hover{transform:scale(1.08)}
+.wa-float:focus-visible{outline:3px solid #fff;outline-offset:3px}
+@keyframes waPulse{0%{box-shadow:0 8px 24px rgba(0,0,0,.45),0 0 0 0 rgba(37,211,102,.55)}70%{box-shadow:0 8px 24px rgba(0,0,0,.45),0 0 0 18px rgba(37,211,102,0)}100%{box-shadow:0 8px 24px rgba(0,0,0,.45),0 0 0 0 rgba(37,211,102,0)}}
 /* reveal */
 .js .rv{opacity:0;transform:translateY(28px);transition:opacity .8s ease,transform .8s cubic-bezier(.2,.7,.2,1)}
 .js .rv.in{opacity:1;transform:none}
@@ -168,7 +173,9 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
  .steps{grid-template-columns:1fr 1fr}.steps::before,.steps::after{display:none}}
 @media(max-width:600px){.row2,.gain{grid-template-columns:1fr}.steps{grid-template-columns:1fr}
  .dock{display:grid;grid-template-columns:1fr 1fr;gap:8px;position:fixed;left:0;right:0;bottom:0;z-index:30;padding:10px 12px;background:rgba(5,7,11,.94);border-top:1px solid var(--line)}
- .dock .btn{justify-content:center;padding:0 10px}nav .btn span{display:none}}
+ .dock .btn{justify-content:center;padding:0 10px}nav .btn span{display:none}
+ .wa-float{right:14px;bottom:82px;width:56px;height:56px}footer{padding-bottom:150px}
+ .readout b{font-size:28px}.readout small{font-size:12px}.result .btn{width:100%;justify-content:center;text-align:center;font-size:16px;padding:10px 12px;line-height:1.15}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}html{scroll-behavior:auto}.js .rv{opacity:1;transform:none}}
 </style>
 </head>
@@ -255,7 +262,6 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
    <div class="bars" id="bars"></div>
    <div class="gain"><div><b id="gBhp">+0</b><small>bhp at Stage 1</small></div><div><b id="gNm">+0</b><small>Nm at Stage 1</small></div></div>
    <a class="btn pri" id="sendWa" href="#">Send to WhatsApp for exact quote</a>
-   <p class="note">Estimate only. Live DVLA reg lookup can be connected at launch.</p>
   </div>
  </div>
 </section>
@@ -304,18 +310,18 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
  <div class="wrap">
   <div class="panel rv">
    <h2>Visit or book</h2>
-   <dl><dt>Address</dt><dd>14 Cotton Brook Road, Derby, DE23 8YJ</dd><dt>WhatsApp</dt><dd>07766 679582</dd><dt>Services</dt><dd>Remapping · Diagnostics · DPF · AdBlue · Body kits</dd></dl>
-   <div class="cta"><a class="btn pri wa" href="#">WhatsApp to book</a><a class="btn sec" href="https://www.google.com/maps/search/?api=1&query=14+Cotton+Brook+Road+Derby+DE23+8YJ">Get directions</a></div>
+   <dl><dt>Address</dt><dd>Unit 14 Cotton Brook Road, Derby DE23 8YJ</dd><dt>WhatsApp</dt><dd>07766 679582</dd><dt>Services</dt><dd>Remapping · Diagnostics · DPF · AdBlue</dd></dl>
+   <div class="cta"><a class="btn pri wa" href="#">WhatsApp to book</a><a class="btn sec" href="https://www.google.com/maps/search/?api=1&query=Unit+14+Cotton+Brook+Road+Derby+DE23+8YJ">Get directions</a></div>
   </div>
   <div class="rv">
    <h2>Questions</h2>
    <div id="faq" style="margin-top:12px"></div>
-   <p class="note">Draft answers for review by RS Performance before launch.</p>
   </div>
  </div>
 </section>
 
-<footer><div class="wrap"><span><img class="foot-logo" src="images/logo-full.png" alt="RS Performance Derby: remaps, service, AdBlue solutions, diagnostics" loading="lazy" width="160" height="64">© RS Performance Derby · 14 Cotton Brook Road, Derby, DE23 8YJ</span><span>Quality workmanship, expert diagnostics &amp; better performance</span></div></footer>
+<footer><div class="wrap"><span><img class="foot-logo" src="images/logo-full.png" alt="RS Performance Derby: remaps, service, AdBlue solutions, diagnostics" loading="lazy" width="160" height="64">© 2026 RS Performance Derby · Unit 14 Cotton Brook Road, Derby DE23 8YJ · WhatsApp <a href="https://wa.me/447766679582?text=Hi%20RS%20Performance%20Derby%2C%20I%E2%80%99d%20like%20to%20book">07766 679582</a></span><span>Quality workmanship, expert diagnostics &amp; better performance</span></div></footer>
+<a class="wa-float" href="https://wa.me/447766679582?text=Hi%20RS%20Performance%20Derby%2C%20I%E2%80%99d%20like%20to%20book" aria-label="Chat with RS Performance Derby on WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.5 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.5-3.9-4.7-4.1-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.3 0 .5l-.3.5-.4.4c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1c.2-.3.4-.2.6-.1l2 .9c.3.2.5.2.5.3.1.1.1.7-.1 1.3Z"/></svg></a>
 <div class="dock"><a class="btn pri wa" href="#">WhatsApp</a><a class="btn sec" href="tel:+447766679582">Call</a></div>
 
 <script>
@@ -332,15 +338,13 @@ eco:'<path d="M8 32a16 16 0 1 1 32 0"/><path d="M24 32l-7-9"/><circle cx="24" cy
 code:'<path d="M24 7L43 40H5z"/><path d="M24 19v10M24 34v1"/>',
 diag:'<rect x="8" y="10" width="32" height="22" rx="2"/><path d="M4 38h40M12 22h7l3-6 4 11 3-5h7"/>',
 dpf:'<rect x="8" y="14" width="32" height="20" rx="10"/><path d="M2 24h6M40 24h6"/><g fill="currentColor" stroke="none"><circle cx="17" cy="20" r="1.6"/><circle cx="24" cy="20" r="1.6"/><circle cx="31" cy="20" r="1.6"/><circle cx="17" cy="28" r="1.6"/><circle cx="24" cy="28" r="1.6"/><circle cx="31" cy="28" r="1.6"/></g>',
-drop:'<path d="M24 6c7 10 12 16 12 23a12 12 0 0 1-24 0c0-7 5-13 12-23z"/><path d="M18 30a6 6 0 0 0 6 6"/>',
-body:'<path d="M4 31v-6l6-2 6-7h15l7 7 6 2v6h-4"/><path d="M14 31h20"/><circle cx="10" cy="31" r="4"/><circle cx="38" cy="31" r="4"/>'};
+drop:'<path d="M24 6c7 10 12 16 12 23a12 12 0 0 1-24 0c0-7 5-13 12-23z"/><path d="M18 30a6 6 0 0 0 6 6"/>'};
 const svcs=[['chip','Stage 1 & 2 remapping','Stage 1 on a healthy standard car, Stage 2 for cars with supporting hardware.'],
 ['eco','Economic remapping','A smoother, more efficient map focused on mpg for daily drivers, vans and fleets.'],
 ['code','Fault code removal','We read, diagnose and clear fault codes, and fix what triggered them.'],
 ['diag','Diagnostics & fault finding','Dealer-level scanning and live data to find the real cause of warning lights.'],
 ['dpf','DPF services','Cleaning, forced regeneration and sensor checks for blocked particulate filters.'],
-['drop','AdBlue solutions','Fault finding and repair for AdBlue warnings, pumps, heaters and sensors.'],
-['body','Body kits','Styling upgrades supplied and fitted to finish off the look.']];
+['drop','AdBlue solutions','Fault finding and repair for AdBlue warnings, pumps, heaters and sensors.']];
 document.getElementById('svcGrid').innerHTML=svcs.map(([i,t,d])=>`<article class="card rv"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">${ic[i]}</svg><h3>${t}</h3><p>${d}</p></article>`).join('');
 
 /* marquee */
